@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- 
+ * Projeto:  FSEJobs  -  Sistema de busca de Josb no FSEconomy
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Balneario Camboriu/SC  -  2025
+ * Equipe:   Murilo, Victor, Allan
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="~{modulos/fragmento-header :: header-section}">
+    <title>FSEJobs</title>
+</head>
+    
+    <body th:style="'background-image:url(' + @{/assets/background.jpg} + '); background-repeat: no-repeat, repeat; background-size: cover;'">    
+        <!-- Full Page Device -->
+        <div id="page-container">
+            <!-- CONTEUDO DA PAGINA  -->
+            <div id="content-wrap">
+                <!--  MENU DO SISTEMA  -->
+
+                <!--  AREA DO CONTEUDO DINAMICO  -->
+                <section class="d-flex justify-content-center align-items-center vh-100">
+                    <div class="col inner-box">
+                        <div class="row fseCard">  	
+                            <div class="col text-center d-flex flex-column align-items-center gap-4">
+                                <span th:if="${errorType == 'SUCESSO'}"  class="mb-4 d-block">
+                                      <i class="fa-solid fa-check fa-beat fa-xl" style="color: #1a5fb4; font-size: 4em;"></i>
+                                </span>
+                                <span th:if="${errorType == 'NOTFOUND'}" class="mb-4 d-block">
+                                      <i class="fa-solid fa-triangle-exclamation fa-beat fa-xl" style="color: #1a5fb4; font-size: 4em;"></i>
+                                </span>
+                                <h2><span th:text="${errorPage1}"></span></h2>
+                                <h5  class="mb-4"><span th:text="${errorPage2}"></span></h5>
+
+                                <!-- Mostra este link se errorOrigem == "Dashboard" -->
+                                <a class="btn btn-primary btn-xl align-self-center" style="width: 50%;" th:if="${errorOrigem == 'Dashboard'}" th:href="@{/dashboard}"><span th:text="#{action.goback}"/></a>
+
+                                <!-- Mostra este link se errorOrigem == 'publico' -->
+                                <a class="btn btn-primary btn-xl" th:if="${errorOrigem == 'Public'}" th:href="@{/}"><span th:text="#{action.goback}"/></a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--  FIM DO CONTEUDO DINAMICO  -->
+
+                <!-- ROODAPE DA PAGINA -->
+                <div th:insert="~{modulos/fragmento-footer :: footer-clean}"></div>
+            </div>
+        </div>
+    </body>
+</html>

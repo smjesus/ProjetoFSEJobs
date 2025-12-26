@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!-- 
+ * Projeto:  FSEJobs  -  Sistema de busca de Josb no FSEconomy
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Balneario Camboriu/SC  -  2025
+ * Equipe:   Murilo, Victor, Allan
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="~{modulos/fragmento-header :: header-section}">
+    <title>FSEJobs</title>
+</head>
+    
+<body th:style="'background-image:url(' + @{/assets/background.jpg} + '); background-repeat: no-repeat, repeat; background-size: cover;'">    
+    <!-- Full Page Device -->
+    <div id="page-container">
+        <!-- CONTEUDO DA PAGINA  -->
+        <div id="content-wrap">
+            <!--  MENU DO SISTEMA  -->
+            <div th:insert="~{modulos/fragmento-sistema-menu :: navbar-menusistema}"></div>
+            
+            <!--  AREA DO CONTEUDO DINAMICO  -->
+            <section class="d-flex align-items-center">
+                <div class="col inner-box">
+                    
+                    <div class="d-flex align-items-center pt-4 text-white">
+                        <div style="flex: 0 0 70%;">
+                          <br/><h1 th:text="#{rotas.list}">&nbsp;</h1>
+                        </div>
+                        <div class="ms-auto me-3">
+                            <a class="btn btn-danger btn-lg"  id="btnSyncJobsBD"  th:href="@{/rotas/sincronizar/{id} (id=${usuarioLogado.id})}">
+                                <span class="fa-regular fa-share-from-square">&nbsp;</span>
+                                <span th:text="#{index.syncJobs}"></span>
+                            </a>
+                        </div>
+                        <div>
+                            <a class="btn btn-primary btn-lg" th:href="@{/rotas/cadastrar/{id} (id=${usuarioLogado.id})}">
+                                <span class="fa-regular fa-square-plus">&nbsp;</span>
+                                <span th:text="#{index.addLegs}"></span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <table class="table table-striped fseCard">
+                        <thead>
+                            <tr>
+                                <th th:text="#{rotas.table.owner}"      style="width: 20%;" sec:authorize="hasAuthority('Administrador')" ></th>
+                                <th th:text="#{rotas.table.origem}"      ></th>
+                                <th th:text="#{rotas.table.destino}"     ></th>
+                                <th th:text="#{rotas.table.totalPax}"    ></th>
+                                <th th:text="#{rotas.table.totalMoney}"  ></th>
+                                <th th:text="#{rotas.table.totalPax2}"   ></th>
+                                <th th:text="#{rotas.table.totalMoney2}" ></th>
+                                <th th:text="#{action.title}"           style="width: 15%; text-align: center;" colspan="2" ></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${colecao.empty}">
+                                    <td colspan="6" th:text="#{rotas.no}" sec:authorize="!hasAuthority('Administrador')" ></td>
+                                    <td colspan="7" th:text="#{rotas.no}" sec:authorize="hasAuthority('Administrador')" ></td>
+                            </tr>
+                            <tr th:each="tipo : ${colecao}">
+                                <td sec:authorize="hasAuthority('Administrador')"><span th:text="${tipo.usuario.nome}"></span></td>
+                                <td><span th:text="${tipo.origem}"></span></td>
+                                <td><span th:text="${tipo.destino}"></span></td>
+                                <td><span th:text="${tipo.totalItensJobsTo}"></span></td>
+                                <td><span th:text="${tipo.valorTotalJobsToDollar}"></span></td>
+                                <td><span th:text="${tipo.totalItensAssings}"></span></td>
+                                <td><span th:text="${tipo.valorTotalAssingsDollar}"></span></td>
+                                <td>
+                                    <a class="btn btn-danger btn-sm" 
+                                        th:title="#{action.delete}"
+                                        th:href="@{/rotas/remover/{id}(id=${tipo.entidadeID})}"
+                                        onclick="return confirmarExclusao(event, this);"
+                                        th:text="#{action.delete}">
+                                    </a>
+                                </td>				
+                                <td>
+                                    <a class="btn btn-primary btn-sm" 
+                                        th:title="#{action.edit}"                                       
+                                        th:href="@{/rotas/atualizar/{id}(id=${tipo.entidadeID})}"
+                                        th:text="#{action.edit}">
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--  PAGINACAO DA TABELA  -->
+                    <nav style="margin-top: 20px;" th:if="${colecao.totalPages > 0}">
+                        <ul class="pagination" style="justify-content: center;">
+                            <!-- Botão Previous -->
+                            <li class="page-item" th:classappend="${colecao.first} ? 'disabled'">
+                                <a class="page-link"
+                                    th:href="@{/rotas/paginar/{page}/{pageSize}(page=${colecao.number}, pageSize=15)}">
+                                    <span th:text="#{table.pagination.previous}"></span>
+                                </a>
+                            </li>
+                            <!-- Links das páginas -->
+                            <li class="page-item"
+                                th:each="i : ${#numbers.sequence(0, colecao.totalPages - 1)}"
+                                th:classappend="${colecao.number == i} ? 'active'">
+                                <a class="page-link"
+                                   th:text="${i + 1}"
+                                   th:href="@{/rotas/paginar/{page}/{pageSize}(page=${i+1}, pageSize=15)}"></a>
+                            </li>
+                            <!-- Botão Next -->
+                            <li class="page-item" th:classappend="${colecao.last} ? 'disabled'">
+                                <a class="page-link"
+                                    th:href="@{/rotas/paginar/{page}/{pageSize}(page=${colecao.number + 2}, pageSize=15)}">
+                                    <span th:text="#{table.pagination.next}"></span>
+                                </a>
+                            </li>                 
+                        </ul>
+                    </nav>   
+                </div>
+            </section>
+            <!--  FIM DO CONTEUDO DINAMICO  -->
+            
+        </div>
+        <!-- ROODAPE DA PAGINA -->
+        <div th:insert="~{modulos/fragmento-sistema-footer :: footer-popup}"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!-- 
+ * Projeto:  FSEJobs  -  Sistema de busca de Josb no FSEconomy
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Balneario Camboriu/SC  -  2025
+ * Equipe:   Murilo, Victor, Allan
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="~{modulos/fragmento-header :: header-section}">
+    <title>FSEJobs</title>
+</head>
+    
+<body th:style="'background-image:url(' + @{/assets/background.jpg} + '); background-repeat: no-repeat, repeat; background-size: cover;'">    
+    <!-- Full Page Device -->
+    <div id="page-container">
+        <!-- CONTEUDO DA PAGINA  -->
+        <div id="content-wrap">
+            <!--  MENU DO SISTEMA  -->
+            <div th:insert="~{modulos/fragmento-sistema-menu :: navbar-menusistema}"></div>
+            
+            <!--  AREA DO CONTEUDO DINAMICO  -->
+            <div class="d-flex justify-content-start align-items-start">
+                <div class="col">
+                    <br/>&nbsp;<br/>
+                </div>
+            </div>
+            <!--  FIM DO CONTEUDO DINAMICO  -->
+            
+        </div>
+        <!-- ROODAPE DA PAGINA -->
+        <div th:insert="~{modulos/fragmento-sistema-footer :: footer-popup}"></div>
+    </div>
+</body>
+</html>

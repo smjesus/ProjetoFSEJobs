@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!-- 
+ * Projeto:  FSEJobs  -  Sistema de busca de Josb no FSEconomy
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Balneario Camboriu/SC  -  2025
+ * Equipe:   Murilo, Victor, Allan
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Fragment Thymeleaf</title>
+</head>
+<body>
+<div th:fragment="navbar-menusistema">
+    <nav class="navbar navbar-expand-lg navbar-red navbar-dark fixed-top">
+        <div class="wrapper"></div>
+        <div class="container-fluid all-show">
+            <a class="navbar-brand text-center" th:href="@{/}"><span th:text="${@environment.getProperty('application.title')}"></span>
+                <p style="font-size: 10px; margin-bottom: 0px;" th:text="${@environment.getProperty('application.version')}" /></a>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/dashboard}"><span th:text="#{index.system}"/></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/rotas/paginar/1/15}"><span th:text="#{index.menu.rotas}"/></a>
+                    </li>
+<!--                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/usuario/paginar/{page}/{size}(page=1, size=10)}"><span th:text="#{index.menu.colaboradores}"/></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/permissao/paginar/{page}/{size}(page=1, size=10)}"><span th:text="#{index.menu.permissoes}"/></a>
+                    </li>
+                    -->
+                    <!-- Dropdown de idioma -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLang" data-bs-toggle="dropdown" role="button"
+                            aria-haspopup="true" aria-expanded="false">
+                           <span th:text="#{index.lang.menu}"></span>
+                        </a>
+                        <div class="dropdown-menu user-dropdown" aria-labelledby="navbarDropdownLang">
+                            <a class="dropdown-item" th:href="@{/dashboard?locale=en_US}" th:text="#{index.lang.eng}"></a>
+                            <a class="dropdown-item" th:href="@{/dashboard?locale=pt_BR}" th:text="#{index.lang.pt}"></a>
+                        </div>
+                    </li>
+                </ul>
+
+                <!-- Avatar do usuário à direita -->
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex flex-column align-items-center text-center" href="#" id="navbarUserDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-regular fa-circle-user fa-2xl mb-1" style="color: #FFD43B;"></i>
+                            <span th:text="${usuarioLogado.nomeUsuario}" style="font-size: 0.7rem;"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end user-dropdown" aria-labelledby="navbarUserDropdown">
+                            <li>
+                                <a class="dropdown-item" th:href="@{/usuario/preferencias/{id} (id=${usuarioLogado.id})}"><span th:text="#{menu.system.prefs}"/></a>
+                            </li>
+                            <li>
+                                <form method="post" th:action="@{/logout}">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <button type="submit" class="dropdown-item">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

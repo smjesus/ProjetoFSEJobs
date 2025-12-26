@@ -1,0 +1,252 @@
+@charset "UTF-8";
+/*!
+ * Projeto:  FSEJobs  -  Sistema de busca de Josb no FSEconomy
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Balneario Camboriu/SC  -  2025
+ * Equipe:   Murilo, Victor, Allan
+ *
+ * Folha de Estilo do Sistema
+ * CSS Otimizado pelo ChatGPT em 15/10/2025
+ */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Container interno para distribuir itens */
+.container-fluid {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Remove marcadores e padding das listas de nav */
+.navbar-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Garante que li fique inline-flex para alinhamentos */
+.navbar-nav > li {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Links do menu */
+.navbar-nav > li > a,
+.navbar-nav > li > .nav-link {
+  display: inline-block;
+  padding: 0.5rem 0.5rem;
+  text-transform: uppercase;
+  font-size: 14px;
+  margin-right: 20px;
+  color: #fff;
+  text-decoration: none;
+  line-height: 1;
+  border-radius: 2px;
+  transition: background-color .18s ease, color .18s ease;
+}
+
+/* Hover dos links */
+.navbar-nav > li > a:hover,
+.navbar-nav > li > .nav-link:hover {
+  background-color: #829D73;
+  border-color: #fff;
+}
+ 
+/* Navbar fixa no topo */
+nav.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;           /* altura padrão, ajuste se precisar */
+  display: flex;
+  align-items: center;
+  z-index: 1030;
+  padding: 0 1rem;
+}
+
+.nav-item img {
+    transition: transform 0.2s;
+    border-radius: 3px;
+}
+.nav-item img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 4px rgba(0,0,0,0.3);
+}
+
+/* Marca (logo) */
+.navbar-brand {
+  color: #fff;
+  margin-bottom: 0;
+  font-size: 22px;
+  padding: 0.2em 0.4em;
+  text-decoration: none;
+}
+.navbar-brand img { height: 40px; width: auto; display: block; }
+
+.navbar-brand:hover {
+  background-color: #829D73;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Navbar theme */
+.navbar-red {
+  background-color: #416845;
+  color: #fff;
+  /* cria contexto para .wrapper absoluto */
+  position: relative;
+  overflow: visible;
+}
+
+/* Corrige o posicionamento do dropdown */
+.nav-item.dropdown {
+  position: relative;
+}
+
+.nav-item.dropdown .dropdown-menu {
+  top: 100%;
+  left: 0;
+  right: auto;
+  transform: none;
+  margin-top: 0.3rem;
+}
+
+/* Ao passar o mouse no navbar, estreita o corte */
+.navbar-red:hover .wrapper {
+    color: black;
+    clip-path: polygon(81% 0, 100% 0, 100% 50%, 100% 100%, 65% 100%);
+}
+
+/* Força os itens do menu a aparecerem acima do wrapper */
+.all-show { z-index: 10; display: flex; align-items: center; gap: 0.5rem; }
+
+/* ---------------------------
+   Efeito "fita" preta no canto
+   --------------------------- */
+.wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+  /* forma recortada no canto direito */
+  clip-path: polygon(81% 0, 100% 0, 100% 50%, 100% 100%, 71% 100%);
+  transition: clip-path 0.9s cubic-bezier(.2,.8,.2,1), transform 0.6s;
+  pointer-events: none; /* evita bloquear cliques */
+  z-index: 1;
+}
+
+.btn-primary {
+    background-color: #365980;
+    border-color: #365980
+}
+.btn-primary:hover {
+    background-color: greenyellow;
+    color: black;
+    border-color: black;
+}
+
+.btn-danger:hover {
+    background-color: greenyellow;
+    color: black;    
+}
+
+/* ---------------------------
+   Dropdown (estilos mínimos)
+   Observação: comportamento de abrir/fechar precisa do JS do Bootstrap
+   --------------------------- */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 12rem;
+  padding: 0.5rem 0;
+  margin: 0;
+  background-color: #829D73;
+  color: #fff;
+  border-radius: .25rem;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+  display: none; /* mostrado via JS adicionando .show */
+  z-index: 1050;
+}
+.dropdown-menu .dropdown-item {
+  display: block;
+  width: 100%;
+  padding: .35rem 1rem;
+  clear: both;
+  font-weight: 400;
+  color: #fff;
+  text-decoration: none;
+  background-color: transparent;
+  border: 0;
+}
+.dropdown-menu .dropdown-item:hover { 
+    background-color: #C0E8FD;
+    color: black;
+}
+
+/* classe .show simulando o comportamento do Bootstrap JS */
+.dropdown-menu.show { display: block; }
+
+/* ---------------------------
+   Responsividade básica
+   --------------------------- */
+@media (max-width: 991.98px) {
+  /* empilha itens se necessário - comportamento simples */
+  .container-fluid { flex-wrap: wrap; gap: .5rem; }
+  .navbar-nav { flex-wrap: wrap; gap: .25rem; }
+  .navbar-brand { order: 0; }
+  .navbar-nav { order: 1; }
+  .all-show { order: 2; }
+  nav.navbar { height: auto; padding: .6rem 1rem; }
+}
+
+/* Pequenos ajustes para evitar que wrapper cubra conteúdo clicável em telas pequenas */
+@media (max-width: 575.98px) {
+  .wrapper { clip-path: polygon(100% 0, 100% 0, 100% 50%, 100% 100%, 100% 100%); }
+}
+
+
+.inner-box {
+    padding: 4em 8em;
+}
+
+.fseCard {
+    border-radius: 14px;
+    padding-top: 50px;
+    padding-right: 90px;
+    padding-bottom: 50px;
+    padding-left: 90px;
+    background: var(--Color-CustomOpacityWhite, rgba(255, 255, 255, 0.8));
+    box-shadow: 0px 15px 30px 0px rgba(0, 0, 0, 0.1);
+}
+
+td, th {
+    padding: 1em !important ;
+    border-style: none;
+}
+
+.mensagem{
+    color: red;
+    font-size: small;
+}
+
+
+/*                              End of File.                                   */
