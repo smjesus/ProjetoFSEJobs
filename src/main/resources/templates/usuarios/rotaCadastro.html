@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!-- 
+ * Projeto:  FSEJobs  -  Sistema de busca de Josb no FSEconomy
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Balneario Camboriu/SC  -  2025
+ * Equipe:   Murilo, Victor, Allan
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="~{modulos/fragmento-header :: header-section}">
+    <title>FSEJobs</title>
+</head>
+    
+<body th:style="'background-image:url(' + @{/assets/background.jpg} + '); background-repeat: no-repeat, repeat; background-size: cover;'">    
+    <!-- Full Page Device -->
+    <div id="page-container">
+        <!-- CONTEUDO DA PAGINA  -->
+        <div id="content-wrap">
+            <!--  MENU DO SISTEMA  -->
+            <div th:insert="~{modulos/fragmento-sistema-menu :: navbar-menusistema}"></div>
+            
+            <!--  AREA DO CONTEUDO DINAMICO  -->
+            <section class="d-flex align-items-center">
+                <div class="col inner-box">
+                    
+                    <div class="d-flex align-items-center pt-4 text-white">
+                        <div style="flex: 0 0 70%;">
+                        <h2 th:text="#{index.form.edit}"></h2>
+                        </div>
+                    </div>
+                        
+                    <div class="alert alert-success alert-dismissible fade show" th:if="${mensagem}">
+                        <span th:text="${mensagem}"></span>
+                    </div>
+
+                    <form class="fseCard" action="#" th:action="@{/rotas/cadastrar}" th:object="${rotasDeTrabalho}" method="post">
+                        <div class="row mb-3" sec:authorize="hasAuthority('Administrador')" >
+                            <label class="col-sm-2 col-form-label" th:text="#{rotas.table.owner}"></label>
+                            <div class="col-sm-10">
+                                <select  class="form-select" name="usuarioId" >
+                                    <option th:each="userOpt : ${usuarios}" 
+                                            th:value="${userOpt.entidadeID}" th:text="${userOpt.nome}"
+                                            th:selected="${userOpt.entidadeID == rotasDeTrabalho.usuario.entidadeID}">
+                                    </option>
+                                </select>                                        
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" th:text="#{rotas.table.origem}"></label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" th:field="*{origem}" />  
+                                <span class="text-danger small d-block mt-1" th:if="${#fields.hasErrors('origem')}" th:errors="*{origem}"></span>
+                            </div>				
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" th:text="#{rotas.table.destino}"></label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" th:field="*{destino}" />  
+                                <span class="text-danger small d-block mt-1" th:if="${#fields.hasErrors('destino')}" th:errors="*{destino}"></span>
+                            </div>				
+                        </div>
+                        <!--  CAMPOS HIDDEN  -->
+                        <div class="row mb-3">
+                            <div class="col-sm-12">
+                                <input class="form-control" type="hidden" th:field="*{versao}"     /> 
+                                <input class="form-control" type="hidden" th:field="*{entidadeID}" /> 
+                                <input class="form-control" type="hidden" name="usuarioId" th:value="${usuario.entidadeID}"  sec:authorize="!hasAuthority('Administrador')" /> 
+                            </div>
+                        </div>  
+                        
+                        <div class="d-flex justify-content-center mt-4">
+                            <input type="submit" class="btn btn-primary btn-lg px-4" th:value="#{action.submit}"/>
+                        </div>                        
+                    </form>	
+                </div>
+            </section>
+            <!--  FIM DO CONTEUDO DINAMICO  -->
+        </div>
+    </div>
+    <!--  RODAPE DA PAGINA  -->
+    <div th:insert="~{modulos/fragmento-sistema-footer :: footer-popup}"></div>
+</body>
+</html>

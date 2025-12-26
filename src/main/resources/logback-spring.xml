@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Console colorido -->
+    <appender name="COLORED_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{dd-MM-yyyy HH:mm:ss} %cyan(%-25.25thread) - %highlight(%-5level) [%green(FSEJobs)] %red(%-30.30class{0}) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Nível global -->
+    <root level="INFO">
+        <appender-ref ref="COLORED_CONSOLE" />
+    </root>
+
+    
+</configuration>
