@@ -41,7 +41,8 @@ public class RotasService {
     @Autowired
     private RotasDeTrabalhoRepository rotasRepository;
     @Autowired
-    private XmlParserService xmlParserService;   
+    private XmlParserService xmlParserService; 
+    
     @Value("${application.show.parsexml}")
     private boolean showMatchXmlResults;
     
@@ -54,14 +55,38 @@ public class RotasService {
      */
     public List<RotasDeTrabalho> listar() {
         UsuarioLogin usuario = UsuarioAutenticado.get();
-        logger.info("Executado Servico de listagem das rotas do usuario (Nivel: {}) ...", usuario.getColaborador().getNivelAcesso().getNome());
+        logger.info("Executado Servico de listagem das rotas do usuario (Nivel: {}) ...", usuario.getUsuario().getNivelAcesso().getNome());
         if (usuario == null) {
             return new ArrayList<>();
         }
-        boolean admin = "Administrador".equalsIgnoreCase( usuario.getColaborador().getNivelAcesso().getNome().trim() ) ;
+        boolean admin = "Administrador".equalsIgnoreCase( usuario.getUsuario().getNivelAcesso().getNome().trim() ) ;
         if( admin) return rotasRepository.findAll();
         
         return rotasRepository.findByUsuarioEntidadeID(usuario.getId());
+    }
+
+    /**
+     * Listagem PAGINADA de todos as ROTAS cadastradas no Banco de dados.
+     * 
+     * @param page     - pagina atual da requisicao
+     * @param pageSize - tamanho de itens para apresentar na pagina
+     * @return         - devolve pra View um objeto Pageable
+     */
+    public Page<RotasDeTrabalho> paginar(int page, int pageSize){
+        Pageable pageable;
+        UsuarioLogin usuario = UsuarioAutenticado.get();
+        logger.info("Executado Servico de listagem PAGINADA das ROTAS do usuario (Nivel: {}) ...", usuario.getUsuario().getNivelAcesso().getNome());
+
+        boolean admin = "Administrador".equalsIgnoreCase( usuario.getUsuario().getNivelAcesso().getNome() );
+
+        if (admin) {
+            pageable = PageRequest.of((page -1), pageSize, Sort.by("usuario.nome").ascending());
+            return rotasRepository.findAll(pageable);
+        }
+
+        // usuário comum → sem ordenação
+        pageable = PageRequest.of((page -1), pageSize);
+        return rotasRepository.findByUsuarioEntidadeID(usuario.getId(), pageable);
     }
     
     /**
@@ -73,31 +98,7 @@ public class RotasService {
     public Optional<RotasDeTrabalho> buscarRota(Long identidade) {
         return rotasRepository.findByEntidadeID(identidade);
     }
-    
-    /**
-     * Listagem PAGINADA de todos as ROTAS cadastradas no Banco de dados.
-     * 
-     * @param page     - pagina atual da requisicao
-     * @param pageSize - tamanho de itens para apresentar na pagina
-     * @return         - devolve pra View um objeto Pageable
-     */
-    public Page<RotasDeTrabalho> paginar(int page, int pageSize){
-        Pageable pageable;
-        UsuarioLogin usuario = UsuarioAutenticado.get();
-        logger.info("Executado Servico de listagem PAGINADA das ROTAS do usuario (Nivel: {}) ...", usuario.getColaborador().getNivelAcesso().getNome());
-
-        boolean admin = "Administrador".equalsIgnoreCase( usuario.getColaborador().getNivelAcesso().getNome() );
-
-        if (admin) {
-            pageable = PageRequest.of((page -1), pageSize, Sort.by("usuario.nome").ascending());
-            return rotasRepository.findAll(pageable);
-        }
-
-        // usuário comum → sem ordenação
-        pageable = PageRequest.of((page -1), pageSize);
-        return rotasRepository.findByUsuarioEntidadeID(usuario.getId(), pageable);
-    }
-        
+            
     /**
      * Metodo para atualizar uma ROTA do Usuario na base de dados.
      *
@@ -175,5 +176,6 @@ public class RotasService {
                         "Rota DELETADA no Sistema!"
         ));
     }
+
 }
 /*                    End of Class                                            */

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!-- 
+ * Projeto:  FSEJobs  -  Sistema de busca de Josb no FSEconomy
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Balneario Camboriu/SC  -  2025
+ * Equipe:   Murilo, Victor, Allan
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="~{modulos/fragmento-header :: header-section}">
+    <title>FSEJobs</title>
+</head>
+    
+<body th:style="'background-image:url(' + @{/assets/background.jpg} + '); background-repeat: no-repeat, repeat; background-size: cover;'">    
+    <!-- Full Page Device -->
+    <div id="page-container">
+        <!-- CONTEUDO DA PAGINA  -->
+        <div id="content-wrap">
+            <!--  MENU DO SISTEMA  -->
+            <div th:insert="~{modulos/fragmento-sistema-menu :: navbar-menusistema}"></div>
+
+            <!--  AREA DO CONTEUDO DINAMICO  -->
+            <section class="d-flex align-items-center">
+                <div class="col inner-box">
+                    
+                    <!--    Titulo da Secao     -->
+                    <div class="d-flex align-items-center pt-4 text-white">
+                        <div style="flex: 0 0 70%;">
+                            <h1 th:text="#{index.form.edit}">&nbsp;</h1>
+                        </div>
+                    </div>
+
+                    <!-- Mensagens de Erro -->
+                    <div class="alert alert-danger" th:if="${mensagem}">
+                        <span th:text="${mensagem}"></span>
+                    </div>
+
+                    <form class="fseCard" th:action="@{/usuario/senha}"  method="post">
+                        <!-- SENHA 1 -->
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" th:text="#{form.password}"></label>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="password" name="novaSenha"  />
+                            </div>
+                        </div>
+
+                        <!-- SENHA 2 -->
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" th:text="#{form.password2}"></label>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="password"  name="confirmarSenha"  />
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-center mt-4 gap-4">
+                        <!-- CAMPOS HIDDEN (APENAS ID DO USUÁRIO) -->
+                            <input type="hidden" name="entidadeID" th:value="${entidadeID}" />
+
+                            <!-- BOTÕES -->
+                            <a     class="btn btn-secondary btn-lg px-4" th:text="#{action.goback}"  role="button" th:href="@{/dashboard}" />&nbsp;
+                            <input class="btn btn-primary   btn-lg px-4" th:value="#{action.update}" type="submit" />
+                        </div>                        
+
+                    </form>
+                </div>
+            </section>
+            <!--  FIM DO CONTEUDO DINAMICO  -->
+            <!--  RODAPE DA PAGINA  -->
+            <div th:insert="~{modulos/fragmento-footer :: footer-clean}"></div>
+        </div>
+    </div>
+</body>
+</html>

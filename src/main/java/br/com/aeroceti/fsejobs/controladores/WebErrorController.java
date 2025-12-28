@@ -38,9 +38,10 @@ public class WebErrorController implements ErrorController {
     
     @GetMapping("/error")
     public ModelAndView handleError (HttpServletRequest request, Model model, Locale locale) {
-        List<String> rotas = Arrays.asList("/usuario", "/servidor", "/dashboard");
+        List<String> rotas = Arrays.asList("/usuario", "/rotas", "/dashboard");
         var mensagem1 = i18svc.buscarMensagem("error.all.page.1", locale);
         var mensagem2 = i18svc.buscarMensagem("error.all.page.2", locale);
+        logger.info("Tratamento de erro de requisicao vinda de " + request.getRemoteAddr() );
 
         Object httpStatus = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         Object uri = request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI);
@@ -71,7 +72,7 @@ public class WebErrorController implements ErrorController {
         mensagem1 = rotas.stream().anyMatch(uri.toString()::contains) ? "Dashboard" : "Public";
         model.addAttribute("errorOrigem", mensagem1);
         model.addAttribute("errorType", "NOTFOUND");
-        logger.info("Encaminhando para nova pagina de erro ...");
+        logger.info("Encaminhando para a pagina de erro ...");
         return new ModelAndView("error");
     }
     

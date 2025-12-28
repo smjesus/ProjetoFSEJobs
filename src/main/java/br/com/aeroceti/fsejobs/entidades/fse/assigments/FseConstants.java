@@ -7,10 +7,6 @@
  */
 package br.com.aeroceti.fsejobs.entidades.fse.assigments;
 
-/**
- *
- * @author smurilo
- */
 public final class FseConstants {
     public static final String FSE_NAMESPACE = "https://server.fseconomy.net";
 }

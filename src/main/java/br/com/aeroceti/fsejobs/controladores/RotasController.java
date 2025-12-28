@@ -6,6 +6,7 @@
  */
 package br.com.aeroceti.fsejobs.controladores;
 
+import br.com.aeroceti.fsejobs.componentes.UsuarioAutenticado;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +44,7 @@ public class RotasController {
 
 
     /**
-     * Listagem de TODAS as ROTAS cadastrados no Banco de dados.
+     * Listagem de TODAS as ROTAS cadastradas no Banco de dados.
      *
      * @param modelo - Objeto Model para injetar dados na View
      * @return  String para o Spring realizar o encaminhamento a View 
@@ -65,8 +66,9 @@ public class RotasController {
      */
     @RequestMapping("/paginar/{page}/{pageSize}")
     public String listar( @PathVariable int page, @PathVariable int pageSize, Model modelo ) {
-        logger.info("Recebida requisicao para listar as Permissoes PAGINADAS ...");
+        logger.info("Recebida requisicao para listar as ROTAS PAGINADAS ...");
         modelo.addAttribute("colecao",rotasSVC.paginar(page, pageSize));
+        modelo.addAttribute("showSync", userService.mostrarSincronizador(UsuarioAutenticado.get().getId()));
         return"/usuarios/rotas";
     }
     
@@ -90,6 +92,7 @@ public class RotasController {
             return "redirect:/rotas/paginar/1/15";
         }
         modelo.addAttribute("rotasDeTrabalho", new RotasDeTrabalho());
+        modelo.addAttribute("usuarios", userService.listar(true));
         logger.info("Encaminhando ao formulario de cadastro ...");
         return "/usuarios/rotaCadastro";
     }
@@ -120,29 +123,7 @@ public class RotasController {
         }
         return "redirect:/rotas/paginar/1/15";
     }
-    
-    /**
-     * SINCRONIZACAO das ROTAS de um Usuario com as informacoes do FSEconomy.
-     *
-     * @param id - ID do usuario das rotas a sincronizar
-     * @param modelo - Objeto Model para injetar dados na View
-     * @return  String para o Spring realizar o encaminhamento a View 
-     */
-    @GetMapping("/sincronizar/{id}")
-    public String sincronizarJobs(@PathVariable("id") long id, Model modelo) {
-        Optional<Usuario> usuarioSolicitado = userService.buscar(id);
-        if( usuarioSolicitado.isPresent() ) {
-            Usuario usuario = usuarioSolicitado.get();
-            logger.info("Recebida requisicao para sincronizar os Jobs com as rotas de: " + usuario.getNome());
-            for (RotasDeTrabalho rota : usuario.getRotas()) {
-                rotasSVC.sincronizarRota(rota, usuario.getPreferencias().getApiKey());
-            }
-        } else {
-            logger.info("SINCRONIZAÇÃO NÃO REALIZADA - Referencia Invalida! ");
-        }   
-        return "redirect:/rotas/paginar/1/15";
-    }
-    
+
     /**
      * FORMULARIO para atualizar uma ROTA na base de dados.
      * 
@@ -168,6 +149,32 @@ public class RotasController {
     }    
     
     /**
+     * SINCRONIZACAO das ROTAS de um Usuario com as informacoes do FSEconomy.
+     *
+     * @param id - ID do usuario das rotas a sincronizar
+     * @param modelo - Objeto Model para injetar dados na View
+     * @return  String para o Spring realizar o encaminhamento a View 
+     */
+    @GetMapping("/sincronizar/{id}")
+    public String sincronizarJobs(@PathVariable("id") long id, Model modelo) {
+        if( userService.mostrarSincronizador( id ) ) {
+            Optional<Usuario> usuarioSolicitado = userService.buscar(id);
+            if( usuarioSolicitado.isPresent() ) {
+                Usuario usuario = usuarioSolicitado.get();
+                logger.info("Recebida requisicao para sincronizar os Jobs com as rotas de: " + usuario.getNome());
+                for (RotasDeTrabalho rota : usuario.getRotas()) {
+                    rotasSVC.sincronizarRota(rota, usuario.getPreferencias().getApiKey());
+                }
+            } else {
+                logger.info("SINCRONIZAÇÃO NÃO REALIZADA - Referencia Invalida! ");
+            }   
+        } else {
+            logger.info("SINCRONIZAÇÃO NÃO REALIZADA - Usuario nao cadastrou API-KEY!! ");
+        }
+        return "redirect:/rotas/paginar/1/15";
+    }
+    
+    /**
      * DELETA uma ROTA do Banco de dados.
      * 
      * @param id - ID do objeto a ser atualizado
@@ -175,7 +182,7 @@ public class RotasController {
      * @return String Padrao Spring para redirecionar a uma pagina
      */
     @GetMapping("/remover/{id}")
-    public String deletarUsuario( @PathVariable("id") long id, Model modelo ) {
+    public String deletarRota( @PathVariable("id") long id, Model modelo ) {
         logger.info("Requisicao para DELETAR uma rota com ID={} ", id);
         Optional<RotasDeTrabalho> rotaSolicitada = rotasSVC.buscarRota(id);
         if (rotaSolicitada.isPresent()) {

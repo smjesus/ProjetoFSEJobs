@@ -21,10 +21,13 @@ import br.com.aeroceti.fsejobs.entidades.user.Usuario;
 import br.com.aeroceti.fsejobs.entidades.user.UsuarioLogin;
 import br.com.aeroceti.fsejobs.repositorios.PreferenciasRepository;
 import br.com.aeroceti.fsejobs.repositorios.UsuarioRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ProblemDetail;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Classe de SERVICOS para o objeto Usuario (Logica do negocio).
@@ -36,10 +39,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public class UsuarioService  implements UserDetailsService {
 
     @Autowired
+    private PasswordEncoder passwdEncoder ;
+    @Autowired
     private UsuarioRepository userRepository;
     @Autowired
     private PreferenciasRepository prefsRepository;
-    
+
     private final Logger logger = LoggerFactory.getLogger(UsuarioService.class);
 
     /**
@@ -111,6 +116,15 @@ public class UsuarioService  implements UserDetailsService {
         return userRepository.findByEmail(email);
     }
 
+    public boolean mostrarSincronizador(Long id) {
+        boolean resposta = false;
+        Optional<Usuario> usuarioLogado = userRepository.findByEntidadeID(id);
+        if( usuarioLogado.isPresent() ) {
+            resposta = usuarioLogado.get().getPreferencias() != null ;
+        }        
+        return resposta;
+    }
+    
     
     /**
      * Metodo para atualizar uma PREFERENCIA do Usuario na base de dados.
@@ -124,7 +138,47 @@ public class UsuarioService  implements UserDetailsService {
         return new ResponseEntity<>("Preferencia Salva no Banco de Dados!", HttpStatus.OK);
     }    
     
-
+    /**
+     * CRIPTOGRAFA a senha e atualiza o Usuario na base de dados.
+     *
+     * @param usuario - Objeto Usuario com os dados a serem atualizados
+     * @return ResponseEntity contendo uma mensagem de erro OU um objeto Usuario cadastrado
+     */
+    public ResponseEntity<?> atualizarSenha(Usuario usuario) {
+        // Criptografa a senha:
+        String senhaCriptografada =  passwdEncoder.encode(usuario.getSenha()).trim();
+        usuario.setSenha( senhaCriptografada );
+        // ATUALIZA o objeto do banco de dados
+        logger.info("Usuario " + usuario.getNome() + " atualizado no banco de dados!");
+        return new ResponseEntity<>(userRepository.save(usuario), HttpStatus.OK);
+    }
+    
+    /**
+     * ATUALIZA o STATUS do Usuario na base de dados.
+     *
+     * @param usuario - Objeto Usuario com os dados a serem atualizados
+     * @return ResponseEntity contendo uma mensagem de erro OU um objeto Usuario cadastrado
+     */
+    public ResponseEntity<?> atualizarStatus(Usuario usuario) {
+        // ATUALIZA o objeto do banco de dados
+        logger.info("Usuario " + usuario.getNome() + " atualizado no banco de dados!");
+        return new ResponseEntity<>(userRepository.save(usuario), HttpStatus.OK);
+    }
+    
+    /**
+     * DELETA uma permissao do banco de dados.
+     *
+     * @param user - Usuario a ser deletado
+     * @return ResponseEntity - Mensagem de Erro ou Sucesso na operacao
+     */
+    @Transactional
+    public ResponseEntity<?> remover(Usuario user) {
+        String mensagem = "Servico executado: Usuario " + user.getNome() + " DELETADO no Sistema!"; 
+        userRepository.delete(user);
+        logger.info( mensagem );
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ProblemDetail.forStatusAndDetail(HttpStatus.OK, mensagem));
+    }
     
 }
 /*                    End of Class                                            */

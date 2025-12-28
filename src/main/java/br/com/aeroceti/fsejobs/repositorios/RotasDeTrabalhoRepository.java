@@ -7,14 +7,14 @@
  */
 package br.com.aeroceti.fsejobs.repositorios;
 
-import java.util.Optional;
-import org.springframework.stereotype.Repository;
-import br.com.aeroceti.fsejobs.entidades.user.RotasDeTrabalho;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import br.com.aeroceti.fsejobs.entidades.user.RotasDeTrabalho;
 
 /**
  * Interface para o Repositorio de Rotas do Usuario.

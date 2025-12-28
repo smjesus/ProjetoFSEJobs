@@ -7,18 +7,19 @@
  */
 package br.com.aeroceti.fsejobs.configuracoes;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.Customizer;
-import br.com.aeroceti.fsejobs.componentes.CustomAuthenticationFailureHandler;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.web.SecurityFilterChain;
 import br.com.aeroceti.fsejobs.servicos.UsuarioOAuth2UserService;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import br.com.aeroceti.fsejobs.componentes.CustomOAuth2FailureHandler;
+import br.com.aeroceti.fsejobs.componentes.CustomAuthenticationFailureHandler;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 
 /**
  * Esta classe realiza a configuracao da Seguranca do Spring.
@@ -31,11 +32,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfiguration {
     
+    private final CustomOAuth2FailureHandler failureOA2Handler;
     private final CustomAuthenticationFailureHandler failureHandler;    
     private final UsuarioOAuth2UserService usuarioOAuth2UserService;
     
-    public SecurityConfiguration(CustomAuthenticationFailureHandler failure, UsuarioOAuth2UserService usrOAuth2UserSvc) {
+    public SecurityConfiguration(CustomAuthenticationFailureHandler failure, UsuarioOAuth2UserService usrOAuth2UserSvc, CustomOAuth2FailureHandler failureOA2) {
         this.failureHandler = failure;
+        this.failureOA2Handler = failureOA2;
         this.usuarioOAuth2UserService = usrOAuth2UserSvc;
     }
 
@@ -66,6 +69,7 @@ public class SecurityConfiguration {
                 
                 .oauth2Login( oac -> oac
                         .loginPage("/login") 
+                        .failureHandler(failureOA2Handler)
                         .userInfoEndpoint(userInfo ->
                             userInfo.userService(usuarioOAuth2UserService)
                         )

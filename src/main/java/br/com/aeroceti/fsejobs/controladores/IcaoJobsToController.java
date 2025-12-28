@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  * @author smurilo
  */
-@Controller
-@RequestMapping("/jobs")
+//@Controller
+//@RequestMapping("/jobs")
 public class IcaoJobsToController {
 
     @Autowired

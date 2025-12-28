@@ -8,10 +8,12 @@
 package br.com.aeroceti.fsejobs.entidades.user;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Objects;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 /**
  * Entidade do Spring Security para login no sistema.
@@ -19,13 +21,16 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author Sergio Murilo - smurilo at Gmail.com
  * @version 1.0
  */
-public class UsuarioLogin implements UserDetails {
+public class UsuarioLogin implements UserDetails, OAuth2User {
 
     private final Usuario usuario;
+    private Map<String, Object> attributes;
 
     public UsuarioLogin(Usuario colaborador) {
         this.usuario = colaborador;
     }
+      
+    /* ================= UserDetails ================= */
     
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -33,18 +38,6 @@ public class UsuarioLogin implements UserDetails {
         return AuthorityUtils.createAuthorityList(listAuthoriry);
     }
     
-    public Long getId(){
-        return usuario.getEntidadeID();
-    }
-    
-    public String getNomeUsuario() {
-        return usuario.getNome();
-    }
-    
-    public Usuario getColaborador(){
-        return this.usuario;
-    }
-
     @Override
     public String getPassword() {
         return usuario.getSenha();
@@ -77,12 +70,43 @@ public class UsuarioLogin implements UserDetails {
         }
         // 3. Comparação dos atributos usando Objects.equals() para segurança contra NullPointerException
         UsuarioLogin other = (UsuarioLogin) obj;
-        return Objects.equals(this.getColaborador(), other.getColaborador());
+        return Objects.equals(this.getUsuario(), other.getUsuario());
     }
 
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
+    }
+    
+    /* ================= OAuth2User ================= */
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+    
+    public void setAttributes(Map<String, Object> attributes) {
+        this.attributes = attributes;
+    }
+    
+    @Override
+    public String getName() {
+        // obrigatório pelo contrato OAuth2User
+        return usuario.getEmail();
+    }
+
+    /* ================= extras ================= */    
+        
+    public Long getId(){
+        return usuario.getEntidadeID();
+    }
+    
+    public String getNomeUsuario() {
+        return usuario.getNome();
+    }
+    
+    public Usuario getUsuario(){
+        return this.usuario;
     }
 
 }

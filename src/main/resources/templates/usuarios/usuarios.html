@@ -24,20 +24,12 @@
                     
                     <div class="d-flex align-items-center pt-4 text-white">
                         <div style="flex: 0 0 70%;">
-                            <br/><h1 th:text="#{rotas.list}">&nbsp;</h1>
-                        </div>
-                        <div class="ms-auto me-3">
-                            <a class="btn btn-danger btn-lg"  id="btnSyncJobsBD"
-                               th:href="${showSync} ? @{/rotas/sincronizar/{id} (id=${usuarioLogado.id})} : '#'"
-                               th:classappend="${!showSync} ? ' disabled' : ''"  th:attr="aria-disabled=${!showSync}">
-                                <span class="fa-regular fa-share-from-square">&nbsp;</span>
-                                <span th:text="#{index.syncJobs}"></span>
-                            </a>
+                          <br/><h1 th:text="#{user.list}">&nbsp;</h1>
                         </div>
                         <div>
-                            <a class="btn btn-primary btn-lg" th:href="@{/rotas/cadastrar/{id} (id=${usuarioLogado.id})}">
+                            <a class="btn btn-primary btn-lg disabled" th:href="@{/usuario/cadastrar}" tabindex="-1" aria-disabled="true">
                                 <span class="fa-regular fa-square-plus">&nbsp;</span>
-                                <span th:text="#{index.addLegs}"></span>
+                                <span th:text="#{index.register}"></span>
                             </a>
                         </div>
                     </div>
@@ -45,42 +37,39 @@
                     <table class="table table-striped fseCard">
                         <thead>
                             <tr>
-                                <th th:text="#{rotas.table.owner}"      style="width: 20%;" sec:authorize="hasAuthority('Administrador')" ></th>
-                                <th th:text="#{rotas.table.origem}"      ></th>
-                                <th th:text="#{rotas.table.destino}"     ></th>
-                                <th th:text="#{rotas.table.totalPax}"    ></th>
-                                <th th:text="#{rotas.table.totalMoney}"  ></th>
-                                <th th:text="#{rotas.table.totalPax2}"   ></th>
-                                <th th:text="#{rotas.table.totalMoney2}" ></th>
-                                <th th:text="#{action.title}"           style="width: 15%; text-align: center;" colspan="2" ></th>
+                                <th th:text="#{users.table.nome}"      ></th>
+                                <th th:text="#{users.table.email}"     ></th>
+                                <th th:text="#{users.table.isativo}"   ></th>
+                                <th th:text="#{users.table.permissoes}"></th>
+                                <th th:text="#{action.title}"          style="width: 15%; text-align: center;" colspan="3" ></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:if="${colecao.empty}">
-                                    <td colspan="7" th:text="#{rotas.no}" sec:authorize="!hasAuthority('Administrador')" ></td>
-                                    <td colspan="8" th:text="#{rotas.no}" sec:authorize="hasAuthority('Administrador')" ></td>
+                                    <td colspan="6" th:text="#{rotas.no}"></td>
                             </tr>
                             <tr th:each="tipo : ${colecao}">
-                                <td sec:authorize="hasAuthority('Administrador')"><span th:text="${tipo.usuario.nome}"></span></td>
-                                <td><span th:text="${tipo.origem}"></span></td>
-                                <td><span th:text="${tipo.destino}"></span></td>
-                                <td><span th:text="${tipo.totalItensJobsTo}"></span></td>
-                                <td><span th:text="${tipo.valorTotalJobsToDollar}"></span></td>
-                                <td><span th:text="${tipo.totalItensAssings}"></span></td>
-                                <td><span th:text="${tipo.valorTotalAssingsDollar}"></span></td>
+                                <td><span th:text="${tipo.nome}"></span></td>
+                                <td><span th:text="${tipo.email}"></span></td>
+                                <td><span th:text="${tipo.ativo}"></span></td>
+                                <td><span th:text="${tipo.nivelAcesso.nome}"></span></td>
+                                
+                                <!-- ACOES -->
                                 <td>
+                                    <!-- Botão de DELETAR -->
                                     <a class="btn btn-danger btn-sm" 
                                         th:title="#{action.delete}"
-                                        th:href="@{/rotas/remover/{id}(id=${tipo.entidadeID})}"
+                                        th:href="@{/usuario/remover/{id}(id=${tipo.entidadeID})}"
                                         onclick="return confirmarExclusao(event, this);"
                                         th:text="#{action.delete}">
                                     </a>
                                 </td>				
                                 <td>
-                                    <a class="btn btn-primary btn-sm" 
+                                    <!-- Botão de ATIVAR/DESATIVAR -->
+                                    <a class="btn btn-primary btn-sm" th:classappend="${tipo.ativo} ? 'btn-dark' : 'btn-primary'"
                                         th:title="#{action.edit}"                                       
-                                        th:href="@{/rotas/atualizar/{id}(id=${tipo.entidadeID})}"
-                                        th:text="#{action.edit}">
+                                        th:href="@{/usuario/status/{id}/{code} (id=${tipo.entidadeID}, code=${!tipo.ativo})}"
+                                        th:text="${tipo.ativo} ? #{action.desativar} : #{action.ativar}">
                                     </a>
                                 </td>
                             </tr>
@@ -92,7 +81,7 @@
                             <!-- Botão Previous -->
                             <li class="page-item" th:classappend="${colecao.first} ? 'disabled'">
                                 <a class="page-link"
-                                    th:href="@{/rotas/paginar/{page}/{pageSize}(page=${colecao.number}, pageSize=15)}">
+                                    th:href="@{/usuario/paginar/{page}/{pageSize}(page=${colecao.number}, pageSize=15)}">
                                     <span th:text="#{table.pagination.previous}"></span>
                                 </a>
                             </li>
@@ -102,12 +91,12 @@
                                 th:classappend="${colecao.number == i} ? 'active'">
                                 <a class="page-link"
                                    th:text="${i + 1}"
-                                   th:href="@{/rotas/paginar/{page}/{pageSize}(page=${i+1}, pageSize=15)}"></a>
+                                   th:href="@{/usuario/paginar/{page}/{pageSize}(page=${i+1}, pageSize=15)}"></a>
                             </li>
                             <!-- Botão Next -->
                             <li class="page-item" th:classappend="${colecao.last} ? 'disabled'">
                                 <a class="page-link"
-                                    th:href="@{/rotas/paginar/{page}/{pageSize}(page=${colecao.number + 2}, pageSize=15)}">
+                                    th:href="@{/usuario/paginar/{page}/{pageSize}(page=${colecao.number + 2}, pageSize=15)}">
                                     <span th:text="#{table.pagination.next}"></span>
                                 </a>
                             </li>                 

@@ -22,13 +22,13 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/dashboard}"><span th:text="#{index.system}"/></a>
                     </li>
+                    <li class="nav-item" sec:authorize="hasAuthority('Administrador')">
+                        <a class="nav-link" th:href="@{/usuario/paginar/1/15}"><span th:text="#{index.menu.users}"/></a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/rotas/paginar/1/15}"><span th:text="#{index.menu.rotas}"/></a>
                     </li>
-<!--                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/usuario/paginar/{page}/{size}(page=1, size=10)}"><span th:text="#{index.menu.colaboradores}"/></a>
-                    </li>
-                    <li class="nav-item">
+<!--                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/permissao/paginar/{page}/{size}(page=1, size=10)}"><span th:text="#{index.menu.permissoes}"/></a>
                     </li>
                     -->
@@ -56,6 +56,9 @@
                         <ul class="dropdown-menu dropdown-menu-end user-dropdown" aria-labelledby="navbarUserDropdown">
                             <li>
                                 <a class="dropdown-item" th:href="@{/usuario/preferencias/{id} (id=${usuarioLogado.id})}"><span th:text="#{menu.system.prefs}"/></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/usuario/senha/{id} (id=${usuarioLogado.id})}"><span th:text="#{menu.system.passwd}"/></a>
                             </li>
                             <li>
                                 <form method="post" th:action="@{/logout}">

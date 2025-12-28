@@ -30,7 +30,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class InicializadorApplicationData implements CommandLineRunner {
     
     @Value("${spring.security.oauth2.client.registration.google.client-id}")
-    private String mensagemDeBoasVindas;
+    private String mensagem;
     
     @Autowired
     private NivelAcessoRepository   nivelRepository;
@@ -87,7 +87,7 @@ public class InicializadorApplicationData implements CommandLineRunner {
             userRepository.save(userAdmin);
             logger.info("Sistema FSE-Jobs Inicializando ((Admin default configurado)!");            
         }
-        logger.info("Google ID:  {}", this.mensagemDeBoasVindas);
+        logger.info("Google ID:  {}", this.mensagem);
         logger.info("Sistema FSE-Jobs Inicializado. (Runner concluido)");
     }
     

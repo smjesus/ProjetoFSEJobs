@@ -72,9 +72,8 @@ public class RotasDeTrabalho {
     public RotasDeTrabalho() {
     }
 
-    public RotasDeTrabalho(Long entidadeID, String nome) {
+    public RotasDeTrabalho(Long entidadeID) {
         this.entidadeID = entidadeID;
-        this.origem = nome;
     }
 
     /**

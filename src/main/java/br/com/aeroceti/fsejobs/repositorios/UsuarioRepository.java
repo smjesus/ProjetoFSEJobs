@@ -7,15 +7,14 @@
  */
 package br.com.aeroceti.fsejobs.repositorios;
 
-import br.com.aeroceti.fsejobs.entidades.user.Usuario;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import br.com.aeroceti.fsejobs.entidades.user.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interface para o Repositorio de Usuarios.
@@ -27,23 +26,8 @@ import org.springframework.data.repository.query.Param;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    // 🔍 Busca um colaborador específico trazendo NivelAcesso e Servidores
-    @Query("""
-           SELECT c FROM Usuario c
-           LEFT JOIN FETCH c.nivelAcesso
-           WHERE c.entidadeID = :id
-           """)
-    Optional<Usuario> findByEntidadeIDComRelacionamentos(@Param("id") Long id);
-
-    // 🔍 Busca todos os colaboradores com seus Niveis de Acesso e Servidores
-    @Query("""
-           SELECT DISTINCT c FROM Usuario c
-           LEFT JOIN FETCH c.nivelAcesso
-           """)
-    List<Usuario> findAllComRelacionamentos();    
-
     // obtem uma lista de Usuarioes com PAGINACAO
-    @Query(value = "select * from Usuario order by nomePessoal ASC", nativeQuery = true )
+    @Query(value = "select * from Usuario order by nome ASC", nativeQuery = true )
     Page<Usuario> findAllUsuarios(Pageable page);
     
     // obtem uma Permissao atraves do nome
