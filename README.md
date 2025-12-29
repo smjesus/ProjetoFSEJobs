@@ -59,7 +59,7 @@ Este projeto contou com a colaboração dos seguintes profissionais:
   <tr>
     <td align="center">
       <a href="https://github.com/erivaldoesc">
-        <img src="https://avatars.githubusercontent.com/u/115511715?v=4" width="100px;" alt="Sergio Murilo Picture"/><br>
+        <img src="https://avatars.githubusercontent.com/u/37244395?v=4" width="100px;" alt="Erivaldo Santana Picture"/><br>
       </a>
       <sub>
         <b>Erivaldo Santana</b><BR>CEO AeroCETI & Desenvolvedor
@@ -70,7 +70,7 @@ Este projeto contou com a colaboração dos seguintes profissionais:
         <img src="https://avatars.githubusercontent.com/u/115511715?v=4" width="100px;" alt="Sergio Murilo Picture"/><br>
       </a>
       <sub>
-        <b>Sergio Murilo/b><BR>Desenvolvedor Java
+        <b>Sergio Murilo</b><BR>PM AeroCETI & Desenvolvedor Java
       </sub>
     </td>
     <td align="center">
