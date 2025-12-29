@@ -4,7 +4,7 @@
 [MYSQL_BADGE]:        https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white
 [Bootstrap_BADGE]:    https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white
 [Thymeleaf_BADGE]:    https://img.shields.io/badge/Thymeleaf-%23005C0F.svg?style=for-the-badge&logo=Thymeleaf&logoColor=white
-[NetBeans_BADGE]:     https://img.shields.io/badge/NetBeansIDE-1B6AC6.svg?style=for-the-badge&logo=apache-netbeans-ide&logoColor=white
+[NetBeans_BADGE]:     https://img.shields.io/badge/Apache%20NetBeans%20IDE-1B6AC6.svg?style=for-the-badge&logo=Apache-NetBeans-IDE&logoColor=white
 [Linux_BADGE]:        https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black
 [Hibernate_BADGE]:    https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white
 [ApacheTomcat_BADGE]: https://img.shields.io/badge/apache%20tomcat-%23F8DC75.svg?style=for-the-badge&logo=apache-tomcat&logoColor=black
@@ -62,7 +62,7 @@ Este projeto contou com a colaboração dos seguintes profissionais:
         <img src="https://avatars.githubusercontent.com/u/37244395?v=4" width="100px;" alt="Erivaldo Santana Picture"/><br>
       </a>
       <sub>
-        <b>Erivaldo Santana</b><BR>CEO AeroCETI & Desenvolvedor
+        <b>Erivaldo Santana</b><BR>CEO AeroCETI<br>Desenvolvedor
       </sub>
     </td>
     <td align="center">
@@ -70,15 +70,15 @@ Este projeto contou com a colaboração dos seguintes profissionais:
         <img src="https://avatars.githubusercontent.com/u/115511715?v=4" width="100px;" alt="Sergio Murilo Picture"/><br>
       </a>
       <sub>
-        <b>Sergio Murilo</b><BR>PM AeroCETI & Desenvolvedor Java
+        <b>Sergio Murilo</b><BR>PM AeroCETI<br>Desenvolvedor Java
       </sub>
     </td>
     <td align="center">
-      <a href="#">
+      <a href="https://github.com/victornunes-me">
         <img src="https://avatars.githubusercontent.com/u/91098616?v=4" width="100px;" alt="Victor Nunes Picture"/><br>
       </a>
       <sub>
-        <b>Victor Nunes</b><BR>Designer UX/UI
+        <b>Victor Nunes</b><BR>UX/Product Designer<br>Desenvolvedor
       </sub>
     </td>
     <td align="center">
@@ -87,7 +87,7 @@ Este projeto contou com a colaboração dos seguintes profissionais:
         <img src="https://avatars.githubusercontent.com/u/146113108?v=4" width="100px;" alt="Sergio Levi Picture"/><br>
       </a>
       <sub>
-        <b>Sergio Levi</b><BR>Desenvolvedor/Designer
+        <b>Sergio Levi</b><BR>Designer<br>Desenvolvedor
       </sub>
     </td>
     <td align="center">
@@ -108,7 +108,7 @@ Todas as contribuições para melhoria do projeto são bem-vindas! Você pode aj
 Para aqueles que puderem ou desejarem usar o sistema sintam-se à vontade em nos enviar criticas/sugestões/bugs, pois toda informação será de grande valor para aperfeiçoarmos, corrigir ou até expandir o Sistema.
  Entre em contato pelo formulário no site da AeroCETI!
 
-Esta aplicação já está disponível no endereço:  https://fleetcare.aeroceti.com.br  atualmente disponível somente através do login pelo Google.
+Esta aplicação já está disponível no endereço:  https://fsejobs.aeroceti.com.br  atualmente disponível somente através do login pelo Google.
 
 
 .
