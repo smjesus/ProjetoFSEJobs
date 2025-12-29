@@ -19,14 +19,15 @@
             <div th:insert="~{modulos/fragmento-sistema-menu :: navbar-menusistema}"></div>
             
             <!--  AREA DO CONTEUDO DINAMICO  -->
-            <section class="d-flex align-items-center">
-                <div class="col inner-box">
+            <section class="d-flex align-items-center pt-4">
+                <div class="col inner-box pt-4">
                     
-                    <div class="d-flex align-items-center pt-4 text-white">
+                    <!-- Titulo da pagina e botões principais  -->
+                    <div class="d-flex align-items-center text-white pt-4">
                         <div style="flex: 0 0 70%;">
-                          <br/><h1 th:text="#{user.list}">&nbsp;</h1>
+                            <br/><h1 th:text="#{user.list}">&nbsp;</h1>
                         </div>
-                        <div>
+                        <div class="ms-auto me-3">
                             <a class="btn btn-primary btn-lg disabled" th:href="@{/usuario/cadastrar}" tabindex="-1" aria-disabled="true">
                                 <span class="fa-regular fa-square-plus">&nbsp;</span>
                                 <span th:text="#{index.register}"></span>
@@ -101,7 +102,13 @@
                                 </a>
                             </li>                 
                         </ul>
-                    </nav>   
+                    </nav> 
+                    
+                    <!-- Mensagens de Erro -->
+                    <div class="alert alert-success alert-dismissible fade show" th:if="${mensagem}">
+                        <span th:text="${mensagem}"></span>
+                    </div>
+
                 </div>
             </section>
             <!--  FIM DO CONTEUDO DINAMICO  -->

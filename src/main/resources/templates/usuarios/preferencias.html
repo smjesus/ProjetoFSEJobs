@@ -21,15 +21,18 @@
             <!--  AREA DO CONTEUDO DINAMICO  -->
             <section class="d-flex align-items-center pt-4">
                 <div class="col inner-box pt-4">
+                    
+                    <!--    Titulo da Secao     -->
                     <div class="row pt-5 pb-2 text-white">
                         <h1 th:text="#{user.preferencias.titulo}"></h1>
                     </div>
                         
+                    <!-- Mensagens de Erro -->
                     <div class="alert alert-success alert-dismissible fade show" th:if="${mensagem}">
                         <span th:text="${mensagem}"></span>
                     </div>
 
-                    <form class="fseCard" action="#" th:action="@{/usuario/preferencias}" th:object="${preferencias}" method="post">
+                    <form class="fseCard" th:action="@{/usuario/preferencias}" th:object="${preferencias}" method="post">
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" th:text="#{user.form.apikey}"></label>
                             <div class="col-sm-10">

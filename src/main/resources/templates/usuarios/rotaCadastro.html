@@ -19,14 +19,12 @@
             <div th:insert="~{modulos/fragmento-sistema-menu :: navbar-menusistema}"></div>
             
             <!--  AREA DO CONTEUDO DINAMICO  -->
-            <section class="d-flex align-items-center">
-                <div class="col inner-box">
+            <section class="d-flex align-items-center pt-4">
+                <div class="col inner-box pt-4">
                     
                     <!--    Titulo da Secao     -->
-                    <div class="d-flex align-items-center pt-4 text-white">
-                        <div style="flex: 0 0 70%;">
-                            <h1 th:text="#{index.form.edit}"></h1>
-                        </div>
+                    <div class="row pt-5 pb-2 text-white">
+                        <h1 th:text="#{index.form.edit}"></h1>
                     </div>
                         
                     <!-- Mensagens de Erro -->
