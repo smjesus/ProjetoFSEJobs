@@ -81,7 +81,7 @@ Este projeto contou com a colaboração dos seguintes profissionais:
         <b>Victor Nunes</b><BR>Designer UX/UI
       </sub>
     </td>
-    </td>
+    <td align="center">
       <a href="https://github.com/levigarciia">
       <a href="#">
         <img src="https://avatars.githubusercontent.com/u/146113108?v=4" width="100px;" alt="Sergio Levi Picture"/><br>
@@ -97,6 +97,7 @@ Este projeto contou com a colaboração dos seguintes profissionais:
       <sub>
         <b>Allan Castro</b><BR>Designer Gráfico
       </sub>
+    </td>
   </tr>
 </table>
 
