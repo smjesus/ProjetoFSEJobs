@@ -61,6 +61,14 @@ public class RotasDeTrabalho {
     
     private double valorTotalAssings = 0d;
     
+    private int totalCargaJobsTo = 0;
+    
+    private int quantidadeCarga = 0;
+
+    private int totalCargaAssings = 0;
+    
+    private int quantidadeCargaAssings = 0;
+        
     @Version
     @Column(name = "versao")
     private Long versao;
@@ -171,6 +179,38 @@ public class RotasDeTrabalho {
 
     public int getTotalItensAssings() {
         return totalItensAssings;
+    }
+
+    public int getQuantidadeCarga() {
+        return quantidadeCarga;
+    }
+
+    public void setQuantidadeCarga(int quantidadeCarga) {
+        this.quantidadeCarga = quantidadeCarga;
+    }
+
+    public int getTotalCargaJobsTo() {
+        return totalCargaJobsTo;
+    }
+
+    public void setTotalCargaJobsTo(int totalCargaJobsTo) {
+        this.totalCargaJobsTo = totalCargaJobsTo;
+    }
+
+    public int getTotalCargaAssings() {
+        return totalCargaAssings;
+    }
+
+    public void setTotalCargaAssings(int totalCargaAssings) {
+        this.totalCargaAssings = totalCargaAssings;
+    }
+
+    public int getQuantidadeCargaAssings() {
+        return quantidadeCargaAssings;
+    }
+
+    public void setQuantidadeCargaAssings(int quantidadeCargaAssings) {
+        this.quantidadeCargaAssings = quantidadeCargaAssings;
     }
     
     /**

@@ -158,16 +158,9 @@ public class RotasController {
     @GetMapping("/sincronizar/{id}")
     public String sincronizarJobs(@PathVariable("id") long id, Model modelo) {
         if( userService.mostrarSincronizador( id ) ) {
-            Optional<Usuario> usuarioSolicitado = userService.buscar(id);
-            if( usuarioSolicitado.isPresent() ) {
-                Usuario usuario = usuarioSolicitado.get();
-                logger.info("Recebida requisicao para sincronizar os Jobs com as rotas de: " + usuario.getNome());
-                for (RotasDeTrabalho rota : usuario.getRotas()) {
-                    rotasSVC.sincronizarRota(rota, usuario.getPreferencias().getApiKey());
-                }
-            } else {
-                logger.info("SINCRONIZAÇÃO NÃO REALIZADA - Referencia Invalida! ");
-            }   
+            logger.info("Recebida requisicao para sincronizar os Jobs das rotas do usuario ID={}. ", id);
+            rotasSVC.sincronizarRota( id ) ;
+
         } else {
             logger.info("SINCRONIZAÇÃO NÃO REALIZADA - Usuario nao cadastrou API-KEY!! ");
         }

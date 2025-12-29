@@ -24,10 +24,16 @@ import br.com.aeroceti.fsejobs.componentes.UsuarioAutenticado;
 import br.com.aeroceti.fsejobs.entidades.fse.assigments.AssignmentItems;
 import br.com.aeroceti.fsejobs.entidades.fse.IcaoJobsTo;
 import br.com.aeroceti.fsejobs.entidades.user.RotasDeTrabalho;
+import br.com.aeroceti.fsejobs.entidades.user.Usuario;
 import br.com.aeroceti.fsejobs.entidades.user.UsuarioLogin;
 import br.com.aeroceti.fsejobs.repositorios.RotasDeTrabalhoRepository;
+import br.com.aeroceti.fsejobs.repositorios.UsuarioRepository;
+import jakarta.transaction.Transactional;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 
 /**
  * Classe de SERVICOS para o objeto RotasDeServico.
@@ -42,6 +48,8 @@ public class RotasService {
     private RotasDeTrabalhoRepository rotasRepository;
     @Autowired
     private XmlParserService xmlParserService; 
+    @Autowired
+    private UsuarioRepository userRepository;
     
     @Value("${application.show.parsexml}")
     private boolean showMatchXmlResults;
@@ -110,14 +118,46 @@ public class RotasService {
         rotasRepository.save(rota);
         return new ResponseEntity<>("Preferencia Salva no Banco de Dados!", HttpStatus.OK);
     }    
+    
+    @Transactional
+    @Async("taskFSEExecutor")
+    public void sincronizarRota(Long userID) {
+        logger.info("SINCRONIZAÇÃO de Dados das Rotas iniciada! {}", Thread.currentThread().getName());
+        Optional<Usuario> usuarioSolicitado = userRepository.findByEntidadeID(userID);
+        if( usuarioSolicitado.isPresent() ) {
+            Usuario usuario = usuarioSolicitado.get();
+            List<RotasDeTrabalho> listaRotas = new ArrayList<>(usuario.getRotas());
+            for (int i = 0; i < listaRotas.size(); i += 5) {
+                int fim = Math.min(i + 5, listaRotas.size());
 
-    public ResponseEntity<?> sincronizarRota(RotasDeTrabalho rota, String apiKEY) {
+                for (int j = i; j < fim; j++) {
+                    processarDataFeedRotas(listaRotas.get(j), usuario.getPreferencias().getApiKey().trim());
+                }
+
+                if (fim < listaRotas.size()) {
+                    try {
+                        logger.info("Limite de Requisições atingido!! Aguardando 60 segundos ...");
+                        TimeUnit.SECONDS.sleep(70);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        logger.info("SINCRONIZAÇÃO Cancelada: {}", e.getMessage());
+                    }
+                }
+            } 
+            logger.info("Sincronização de Rotas concluída!");
+        } else {
+            logger.info("SINCRONIZAÇÃO NÃO REALIZADA - Referencia Invalida! ");
+        }  
+    }
+    
+    private void processarDataFeedRotas(RotasDeTrabalho rota, String apiKEY) {
         logger.info("Sincronizando a Rota do usuario ({} - {})...", rota.getOrigem(), rota.getDestino());
         if( showMatchXmlResults) logger.info("API KEY: {}", apiKEY);
         try{
             // Chama o serviço do FSEconomy e sumariza a disponibilidade da rota:
             IcaoJobsTo jobs = xmlParserService.parseXmlIcaoTo(rota.getDestino(), apiKEY.trim());
             rota.setTotalItensJobsTo(0); rota.setValorTotalJobsTo(0.0);
+            rota.setTotalCargaJobsTo(0); rota.setQuantidadeCarga(0);
             jobs.getAssignments().stream().forEach( trabalho -> {
                 if( trabalho.getFromIcao().trim().equalsIgnoreCase(rota.getOrigem()) && 
                     trabalho.getToIcao().trim()  .equalsIgnoreCase(rota.getDestino())        ) {
@@ -127,16 +167,23 @@ public class RotasService {
                         System.out.println("TO .....: " + trabalho.getToIcao());
                         System.out.println("VALOR ..: " + trabalho.getPay());
                         System.out.println("VALOR ..: " + trabalho.getAmount());
+                        System.out.println("VALOR ..: " + trabalho.getCommodity());
                         System.out.println("----------------------------------------------");
-
                     }
-                    rota.setTotalItensJobsTo(rota.getTotalItensJobsTo()+trabalho.getAmount());
-                    rota.setValorTotalJobsTo(rota.getValorTotalJobsTo()+trabalho.getPay());
+                    if( trabalho.getUnitType().equalsIgnoreCase("passengers") ) {
+                        rota.setTotalItensJobsTo(rota.getTotalItensJobsTo()+trabalho.getAmount());
+                        rota.setValorTotalJobsTo(rota.getValorTotalJobsTo()+trabalho.getPay());
+                    }
+                    if( trabalho.getUnitType().equalsIgnoreCase("kg") ) {
+                        rota.setQuantidadeCarga( rota.getQuantidadeCarga() + trabalho.getAmount() );
+                        rota.setTotalCargaJobsTo( rota.getTotalCargaJobsTo() + 1 );
+                    }
                 }
             });
             // Chama novamente o serviço do FSEconomy e sumariza os Assignments do usuaio:
             AssignmentItems myJobs = xmlParserService.parseXmlAssigned(apiKEY.trim());
             rota.setTotalItensAssings(0); rota.setValorTotalAssings(0.0);
+            rota.setTotalCargaAssings(0); rota.setQuantidadeCargaAssings(0);
             myJobs.getAssignments().stream().forEach( trabalho -> {
                 if( trabalho.getFrom().trim().equalsIgnoreCase(rota.getOrigem()) && 
                     trabalho.getDestination().trim()  .equalsIgnoreCase(rota.getDestino())        ) {
@@ -146,18 +193,23 @@ public class RotasService {
                         System.out.println("TO .....: " + trabalho.getDestination());
                         System.out.println("VALOR ..: " + trabalho.getPay());
                         System.out.println("VALOR ..: " + trabalho.getAmount());
+                        System.out.println("VALOR ..: " + trabalho.getAssignment());
                         System.out.println("----------------------------------------------");
-
                     }
-                    rota.setTotalItensAssings(rota.getTotalItensAssings()+trabalho.getAmount());
-                    rota.setValorTotalAssings(rota.getValorTotalAssings()+trabalho.getPay());
+                    if( trabalho.getUnits().equalsIgnoreCase("passengers") ) {
+                        rota.setTotalItensAssings(rota.getTotalItensAssings()+trabalho.getAmount());
+                        rota.setValorTotalAssings(rota.getValorTotalAssings()+trabalho.getPay());
+                    }
+                    if( trabalho.getUnits().equalsIgnoreCase("kg") ) {
+                        rota.setTotalCargaAssings( rota.getTotalCargaAssings() + 1 );
+                        rota.setQuantidadeCargaAssings( rota.getQuantidadeCargaAssings() + trabalho.getAmount() );
+                    }
                 }
             });
+            rotasRepository.save(rota);    
         } catch (JAXBException e) {
-            logger.info("FALHA na SINCRONIZACAO: JAXB error {}", e.getErrorCode());
-        }
-        rotasRepository.save(rota);        
-        return new ResponseEntity<>("Dados sincronizados no Banco de Dados!", HttpStatus.OK);
+            logger.info("FALHA na SINCRONIZACAO: JAXB error: {} - {}", e.getMessage(), e.getErrorCode());
+        }    
     }
     
     /**

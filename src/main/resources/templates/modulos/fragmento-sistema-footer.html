@@ -40,30 +40,33 @@
                 /*]]>*/
             </script>
             
-            
-            <script>
-                document.addEventListener("DOMContentLoaded", function () {
+            <script th:inline="javascript">
+                /*<![CDATA[*/
+                function avisoDeSincronizacao(event, link) {
+                    event.preventDefault();
 
-                const btn = document.getElementById("btnSyncJobsBD");
-                if (btn) {
-                    btn.addEventListener("click", function (e) {
-
-                        Swal.fire({
-                            title:  "[[#{popup.aguardar.titulo}]]" ,
+                    Swal.fire({
+                        title: /*[[#{popup.sincronizacao.iniciada.titulo}]]*/ 'Confirmar ação',
                             html: `
-                                <img src="[[@{/assets/aguarde.gif}]]" style="width:130px;margin-top:15px;"  alt="Loading..."  />
-                            `,
-                            allowOutsideClick: false,
-                            allowEscapeKey: false,
-                            showConfirmButton: false,
-                            didOpen: () => {
-                                //Swal.showLoading(); // opcional (barra animada)
-                            }
-                        });
-
+                                    <p>[[#{popup.sincronizacao.iniciada.mensagem}]]</p>
+                                    <p style="margin-top:10px;font-size:0.9em;color:#666;">
+                                        [[#{popup.sincronizacao.iniciada.dica}]]
+                                    </p> 
+                                  `,
+                        icon: 'info',
+                        showCancelButton: true,
+                        confirmButtonText: /*[[#{popup.confirmar.sim}]]*/ 'Sim, continuar',
+                        cancelButtonText: /*[[#{popup.confirmar.nao}]]*/ 'Cancelar',
+                        reverseButtons: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = link.href;
+                        }
                     });
                 }
-            });
+                /*]]>*/
             </script>
 
         </footer>

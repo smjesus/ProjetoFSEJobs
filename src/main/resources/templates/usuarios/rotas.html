@@ -27,9 +27,10 @@
                             <br/><h1 th:text="#{rotas.list}">&nbsp;</h1>
                         </div>
                         <div class="ms-auto me-3">
-                            <a class="btn btn-danger btn-lg"  id="btnSyncJobsBD"
+                            <a class="btn btn-danger btn-lg"
                                th:href="${showSync} ? @{/rotas/sincronizar/{id} (id=${usuarioLogado.id})} : '#'"
-                               th:classappend="${!showSync} ? ' disabled' : ''"  th:attr="aria-disabled=${!showSync}">
+                               th:classappend="${!showSync} ? ' disabled' : ''"  th:attr="aria-disabled=${!showSync}"
+                               onclick="return avisoDeSincronizacao(event, this);">
                                 <span class="fa-regular fa-share-from-square">&nbsp;</span>
                                 <span th:text="#{index.syncJobs}"></span>
                             </a>
@@ -64,9 +65,15 @@
                                 <td sec:authorize="hasAuthority('Administrador')"><span th:text="${tipo.usuario.nome}"></span></td>
                                 <td><span th:text="${tipo.origem}"></span></td>
                                 <td><span th:text="${tipo.destino}"></span></td>
-                                <td><span th:text="${tipo.totalItensJobsTo}"></span></td>
+                                <td>
+                                    <span th:text="${tipo.totalItensJobsTo}"></span>&nbsp;PAX
+                                    &nbsp;-&nbsp;<span th:text="${tipo.totalCargaJobsTo}"></span>&nbsp;(<span th:text="${tipo.quantidadeCarga}"></span>Kg)
+                                </td>
                                 <td><span th:text="${tipo.valorTotalJobsToDollar}"></span></td>
-                                <td><span th:text="${tipo.totalItensAssings}"></span></td>
+                                <td>
+                                    <span th:text="${tipo.totalItensAssings}"></span>&nbsp;PAX
+                                    &nbsp;-&nbsp;<span th:text="${tipo.totalCargaAssings}"></span>&nbsp;(<span th:text="${tipo.quantidadeCargaAssings}"></span>Kg)
+                                </td>
                                 <td><span th:text="${tipo.valorTotalAssingsDollar}"></span></td>
                                 <td>
                                     <a class="btn btn-danger btn-sm" 
