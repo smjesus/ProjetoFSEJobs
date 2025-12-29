@@ -83,7 +83,6 @@ Este projeto contou com a colaboração dos seguintes profissionais:
     </td>
     <td align="center">
       <a href="https://github.com/levigarciia">
-      <a href="#">
         <img src="https://avatars.githubusercontent.com/u/146113108?v=4" width="100px;" alt="Sergio Levi Picture"/><br>
       </a>
       <sub>
