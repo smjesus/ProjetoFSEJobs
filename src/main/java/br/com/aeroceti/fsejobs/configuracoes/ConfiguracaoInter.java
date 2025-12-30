@@ -12,7 +12,6 @@ import org.springframework.web.servlet.i18n.*;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -38,9 +37,8 @@ public class ConfiguracaoInter implements WebMvcConfigurer {
 
     @Bean
     public LocaleResolver localeResolver() {
-        Locale currentLocale = LocaleContextHolder.getLocale();
         CookieLocaleResolver clr = new CookieLocaleResolver();
-        clr.setDefaultLocale(currentLocale);  // Locale.US);
+        clr.setDefaultLocale(Locale.US);
         return clr;
     }
 
