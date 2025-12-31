@@ -9,7 +9,9 @@
 [Hibernate_BADGE]:    https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white
 [ApacheTomcat_BADGE]: https://img.shields.io/badge/apache%20tomcat-%23F8DC75.svg?style=for-the-badge&logo=apache-tomcat&logoColor=black
 
-
+<p align="center">
+    <img align="center" src="src/main/resources/static/assets/fsejobs_logo.png" alt="FSE-Jobs Logo" width="120" />
+</p>
 <h1 align="center" style="font-weight: bold;">Projeto FSE Jobs</h1>
 
 <div align="center"> 
