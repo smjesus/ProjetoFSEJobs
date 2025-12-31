@@ -96,6 +96,7 @@ input::placeholder, textarea::placeholder {
 /* ---------- Social Buttons ---------- */
 .social-login {
   display: flex;
+  gap: 20px;  
   justify-content: space-between;
   flex-wrap: wrap;
   margin-bottom: 25px;

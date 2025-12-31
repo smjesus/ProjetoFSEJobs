@@ -39,8 +39,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
     private final Logger logger = LoggerFactory.getLogger(CustomAuthenticationFailureHandler.class);
 
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) 
-            throws IOException, ServletException {
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
 
         Locale currentLocale = LocaleContextHolder.getLocale();
         String reason = i18svc.buscarMensagem("login.bad.credentials", currentLocale); 
