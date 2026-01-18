@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import br.com.aeroceti.fsejobs.controladores.DashboardController;
 import br.com.aeroceti.fsejobs.entidades.user.NivelAcesso;
 import br.com.aeroceti.fsejobs.entidades.user.Usuario;
 import br.com.aeroceti.fsejobs.entidades.user.UsuarioLogin;
@@ -42,7 +41,7 @@ public class UsuarioOAuth2UserService extends DefaultOAuth2UserService {
     @Autowired
     private NivelAcessoRepository   nivelRepository;
     
-    Logger logger = LoggerFactory.getLogger(DashboardController.class);
+    Logger logger = LoggerFactory.getLogger(UsuarioOAuth2UserService.class);
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {

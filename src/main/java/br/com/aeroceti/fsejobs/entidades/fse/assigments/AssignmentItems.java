@@ -7,12 +7,13 @@
  */
 package br.com.aeroceti.fsejobs.entidades.fse.assigments;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.ArrayList;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "AssignmentItems", namespace = "https://server.fseconomy.net")
@@ -38,6 +39,9 @@ public class AssignmentItems {
     }
 
     public List<Assignment> getAssignments() {
+        if (assignments == null) {
+            assignments = new ArrayList<>();
+        }        
         return assignments;
     }
 

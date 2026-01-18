@@ -69,8 +69,7 @@ public class WebErrorController implements ErrorController {
         }
         model.addAttribute("errorPage1", mensagem1);
         model.addAttribute("errorPage2", mensagem2);
-        mensagem1 = rotas.stream().anyMatch(uri.toString()::contains) ? "Dashboard" : "Public";
-        model.addAttribute("errorOrigem", mensagem1);
+        model.addAttribute("errorOrigem", rotas.stream().anyMatch(uri.toString()::contains) ? "Dashboard" : "Public");
         model.addAttribute("errorType", "NOTFOUND");
         logger.info("Encaminhando para a pagina de erro ...");
         return new ModelAndView("error");

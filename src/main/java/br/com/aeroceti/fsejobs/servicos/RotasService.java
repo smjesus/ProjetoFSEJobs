@@ -29,7 +29,6 @@ import br.com.aeroceti.fsejobs.entidades.user.UsuarioLogin;
 import br.com.aeroceti.fsejobs.repositorios.RotasDeTrabalhoRepository;
 import br.com.aeroceti.fsejobs.repositorios.UsuarioRepository;
 import jakarta.transaction.Transactional;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -180,6 +179,7 @@ public class RotasService {
                     }
                 }
             });
+            logger.info("Verificando JOBS já SELECIONADOS na rota ({} - {})...", rota.getOrigem(), rota.getDestino());
             // Chama novamente o serviço do FSEconomy e sumariza os Assignments do usuaio:
             AssignmentItems myJobs = xmlParserService.parseXmlAssigned(apiKEY.trim());
             rota.setTotalItensAssings(0); rota.setValorTotalAssings(0.0);

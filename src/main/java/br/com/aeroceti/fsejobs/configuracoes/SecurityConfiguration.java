@@ -63,8 +63,6 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/css/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/assets/**").permitAll()
                         .anyRequest().authenticated()
-                        
-
                 )
                 
                 .oauth2Login( oac -> oac
