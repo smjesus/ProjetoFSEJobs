@@ -10,9 +10,9 @@
     <title>FSEJobs</title>
 </head>
     
-<body th:style="'background-image:url(' + @{/assets/background.jpg} + '); background-repeat: no-repeat, repeat; background-size: cover;'">    
+<body>    
     <!-- Full Page Device -->
-    <div id="page-container">
+    <div id="page-container" class="page-wrapper">
         <!-- CONTEUDO DA PAGINA  -->
         <div id="content-wrap">
             <!--  MENU DO SISTEMA  -->
@@ -28,9 +28,9 @@
                             <br/><h1 th:text="#{user.list}">&nbsp;</h1>
                         </div>
                         <div class="ms-auto me-3">
-                            <a class="btn btn-primary btn-lg disabled" th:href="@{/usuario/cadastrar}" tabindex="-1" aria-disabled="true">
+                            <a class="btn btn-primary btn-lg disabled  d-inline-flex align-items-center flex-nowrap" th:href="@{/usuario/cadastrar}" tabindex="-1" aria-disabled="true">
                                 <span class="fa-regular fa-square-plus">&nbsp;</span>
-                                <span th:text="#{index.register}"></span>
+                                <span class="d-none d-sm-inline ms-2" th:text="#{index.register}"></span>
                             </a>
                         </div>
                     </div>

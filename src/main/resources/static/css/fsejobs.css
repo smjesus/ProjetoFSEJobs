@@ -22,6 +22,18 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+
+    background-image: url('/assets/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 /* Container interno para distribuir itens */
 .container-fluid {
   width: 100%;
