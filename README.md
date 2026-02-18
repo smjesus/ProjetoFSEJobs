@@ -93,10 +93,10 @@ Este projeto contou com a colaboração dos seguintes profissionais:
     </td>
     <td align="center">
       <a href="#">
-        <img src="https://img.freepik.com/psd-gratuitas/adoravel-brinquedo-de-pato-de-borracha-amarelo-para-a-diversao-do-banho_191095-77534.jpg?semt=ais_incoming&w=740&q=80" width="100px;" alt="Allan Castro Picture"/><br>
+        <img src="https://aeroceti.com.br/wp-content/uploads/Prancheta01.jpg" width="100px;" alt="Allan Castro Picture"/>
       </a>
       <sub>
-        <b>Allan Castro</b><BR>Designer Gráfico
+        <b><br/>Allan Castro</b><BR>Designer Gráfico<br/>&nbsp;
       </sub>
     </td>
   </tr>
