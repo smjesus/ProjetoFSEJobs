@@ -34,11 +34,12 @@
   <b>Aplicação WEB para controle dos trabalhos (Jobs) no FSEconomy, através da criação de rotas de trabalho.</b>
 </p>
 
+<hr/>
 <h2>🔵 Objetivo </h2>
 
 Este projeto é uma aplicação WEB com o objetivo de facilitar o planejamento de suas missões no FSEconomy.  Através da criação de rotas de trabalho o usuário poderá ver quantos trabalhos livres tem para o trajeto definido, bem como a quantidade de Jobs já reservado por ele para aquela rota.
 
-
+<hr/>
 <h2>🔵 Pre-requisitos</h2>
 
 Desenvolvido utilizando-se o ambiente <a href="https://netbeans.apache.org/"><b>Apache NetBeans IDE</b></a>, gerenciando as dependencias com <a href="https://maven.apache.org/">Apache Maven</a>. Este aplicativo foi desenvolvido utilizando-se as seguintes tecnologias:
@@ -47,12 +48,12 @@ Desenvolvido utilizando-se o ambiente <a href="https://netbeans.apache.org/"><b>
 - Spring JPA com MySQL Server 8
 - Servidor Tomcat 11
 
-
+<hr/>
 <h2>🔵 API Endpoints</h2>
 
 Este projeto não tem uma API configurada. Os dados do FSEconomy são obtidos através do Data Feed do FSEconomy; para isto o usuario deve obter no site do jogo uma chave API (API Key).
 ​
-
+<hr/>
 <h2>🔵 Colaboradores </h2>
 
 Este projeto contou com a colaboração dos seguintes profissionais:
@@ -61,7 +62,7 @@ Este projeto contou com a colaboração dos seguintes profissionais:
   <tr>
     <td align="center">
       <a href="https://github.com/erivaldoesc">
-        <img src="https://avatars.githubusercontent.com/u/37244395?v=4" width="100px;" alt="Erivaldo Santana Picture"/><br>
+        <img src="https://avatars.githubusercontent.com/u/37244395?v=4" width="100px;" alt="Erivaldo Santana Picture"/><br/>
       </a>
       <sub>
         <b>Erivaldo Santana</b><br/>CEO AeroCETI<br/>Desenvolvedor
@@ -69,7 +70,7 @@ Este projeto contou com a colaboração dos seguintes profissionais:
     </td>
     <td align="center">
       <a href="https://github.com/smjesus">
-        <img src="https://avatars.githubusercontent.com/u/115511715?v=4" width="100px;" alt="Sergio Murilo Picture"/><br>
+        <img src="https://avatars.githubusercontent.com/u/115511715?v=4" width="100px;" alt="Sergio Murilo Picture"/><br/>
       </a>
       <sub>
         <b>Sergio Murilo</b><br/>PM AeroCETI<br/>Desenvolvedor Java
@@ -77,7 +78,7 @@ Este projeto contou com a colaboração dos seguintes profissionais:
     </td>
     <td align="center">
       <a href="https://github.com/victornunes-me">
-        <img src="https://avatars.githubusercontent.com/u/91098616?v=4" width="100px;" alt="Victor Nunes Picture"/><br>
+        <img src="https://avatars.githubusercontent.com/u/91098616?v=4" width="100px;" alt="Victor Nunes Picture"/><br/>
       </a>
       <sub>
         <b>Victor Nunes</b><br/>UX/Product Designer<br/>Desenvolvedor
@@ -85,7 +86,7 @@ Este projeto contou com a colaboração dos seguintes profissionais:
     </td>
     <td align="center">
       <a href="https://github.com/levigarciia">
-        <img src="https://avatars.githubusercontent.com/u/146113108?v=4" width="100px;" alt="Sergio Levi Picture"/><br>
+        <img src="https://avatars.githubusercontent.com/u/146113108?v=4" width="100px;" alt="Sergio Levi Picture"/><br/>
       </a>
       <sub>
         <b>Sergio Levi</b><br/>Designer<br/>Desenvolvedor
@@ -93,16 +94,17 @@ Este projeto contou com a colaboração dos seguintes profissionais:
     </td>
     <td align="center">
       <a href="#">
-        <img src="https://aeroceti.com.br/wp-content/uploads/Prancheta01.jpg" width="100px;" alt="Allan Castro Picture"/>
+        <img src="https://aeroceti.com.br/wp-content/uploads/Prancheta01.jpg" width="100px;" alt="Allan Castro Picture"/><br/>
       </a>
       <sub>
-        <b>Allan Castro<br/>Designer<br/>Gráfico
+        <b>Allan Castro</b><br/>Designer<br/>Gráfico
       </sub>
     </td>
   </tr>
 </table>
 
-<h2 id="contribute">🔵 Contribuições ao Projeto </h2>
+<hr/>
+<h2>🔵 Contribuições ao Projeto </h2>
 
 Todas as contribuições para melhoria do projeto são bem-vindas! Você pode ajudar, sugerindo melhorias (através de contato conosco ou criando um Branch no projeto e enviando um "Pull Request").
 
