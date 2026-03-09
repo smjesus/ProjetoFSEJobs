@@ -64,7 +64,7 @@ Este projeto contou com a colaboração dos seguintes profissionais:
         <img src="https://avatars.githubusercontent.com/u/37244395?v=4" width="100px;" alt="Erivaldo Santana Picture"/><br>
       </a>
       <sub>
-        <b>Erivaldo Santana</b><BR>CEO AeroCETI<br>Desenvolvedor
+        <b>Erivaldo Santana</b><br/>CEO AeroCETI<br/>Desenvolvedor
       </sub>
     </td>
     <td align="center">
@@ -72,7 +72,7 @@ Este projeto contou com a colaboração dos seguintes profissionais:
         <img src="https://avatars.githubusercontent.com/u/115511715?v=4" width="100px;" alt="Sergio Murilo Picture"/><br>
       </a>
       <sub>
-        <b>Sergio Murilo</b><BR>PM AeroCETI<br>Desenvolvedor Java
+        <b>Sergio Murilo</b><br/>PM AeroCETI<br/>Desenvolvedor Java
       </sub>
     </td>
     <td align="center">
@@ -80,7 +80,7 @@ Este projeto contou com a colaboração dos seguintes profissionais:
         <img src="https://avatars.githubusercontent.com/u/91098616?v=4" width="100px;" alt="Victor Nunes Picture"/><br>
       </a>
       <sub>
-        <b>Victor Nunes</b><BR>UX/Product Designer<br>Desenvolvedor
+        <b>Victor Nunes</b><br/>UX/Product Designer<br/>Desenvolvedor
       </sub>
     </td>
     <td align="center">
@@ -88,7 +88,7 @@ Este projeto contou com a colaboração dos seguintes profissionais:
         <img src="https://avatars.githubusercontent.com/u/146113108?v=4" width="100px;" alt="Sergio Levi Picture"/><br>
       </a>
       <sub>
-        <b>Sergio Levi</b><BR>Designer<br>Desenvolvedor
+        <b>Sergio Levi</b><br/>Designer<br/>Desenvolvedor
       </sub>
     </td>
     <td align="center">
@@ -96,7 +96,7 @@ Este projeto contou com a colaboração dos seguintes profissionais:
         <img src="https://aeroceti.com.br/wp-content/uploads/Prancheta01.jpg" width="100px;" alt="Allan Castro Picture"/>
       </a>
       <sub>
-        <b><br/>Allan Castro</b><BR>Designer Gráfico<br/>&nbsp;
+        <b>Allan Castro<br/>Designer<br/>Gráfico
       </sub>
     </td>
   </tr>
